@@ -1,0 +1,94 @@
+{
+  "bail": 0,
+  "changedFilesWithAncestor": false,
+  "ci": false,
+  "collectCoverage": false,
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/index.tsx",
+    "!src/reportWebVitals.ts"
+  ],
+  "coverageDirectory": "D:\\FL2025\\Fl-ai-interface\\coverage",
+  "coverageProvider": "babel",
+  "coverageReporters": [
+    "text",
+    "lcov",
+    "html"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "detectLeaks": false,
+  "detectOpenHandles": false,
+  "errorOnDeprecated": false,
+  "expand": false,
+  "findRelatedTests": false,
+  "forceExit": false,
+  "json": false,
+  "lastCommit": false,
+  "listTests": false,
+  "logHeapUsage": false,
+  "maxConcurrency": 5,
+  "maxWorkers": 15,
+  "noStackTrace": false,
+  "nonFlagArgs": [
+    "tests/e2e/wallet-connection.cy.js"
+  ],
+  "notify": false,
+  "notifyMode": "failure-change",
+  "onlyChanged": false,
+  "onlyFailures": false,
+  "openHandlesTimeout": 1000,
+  "passWithNoTests": false,
+  "projects": [],
+  "reporters": [
+    [
+      "default",
+      {}
+    ],
+    [
+      "D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-stare@2.5.2_@popperjs+core@2.11.8_node-notifier@10.0.1\\node_modules\\jest-stare\\lib\\index.js",
+      {
+        "resultDir": "jest-stare/",
+        "reportTitle": "Web3 Frontend Tests",
+        "additionalResultsProcessors": [],
+        "coverageLink": "../coverage/lcov-report/index.html",
+        "jestStareConfigJson": "jest-stare.json",
+        "jestGlobalConfigJson": "globalStuff.json",
+        "resultHtml": "index.html",
+        "resultJson": "jest-results.json"
+      }
+    ]
+  ],
+  "rootDir": "D:\\FL2025\\Fl-ai-interface",
+  "runInBand": false,
+  "runTestsByPath": false,
+  "seed": -947599671,
+  "skipFilter": false,
+  "snapshotFormat": {
+    "escapeString": false,
+    "printBasicPrototype": false
+  },
+  "testFailureExitCode": 1,
+  "testPathPatterns": {
+    "patterns": [
+      "tests/e2e/wallet-connection.cy.js"
+    ],
+    "type": "TestPathPatterns"
+  },
+  "testSequencer": "D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\@jest+test-sequencer@30.1.3\\node_modules\\@jest\\test-sequencer\\build\\index.js",
+  "updateSnapshot": "new",
+  "useStderr": false,
+  "verbose": true,
+  "waitForUnhandledRejections": false,
+  "watch": false,
+  "watchAll": false,
+  "watchman": true,
+  "workerThreads": false
+}

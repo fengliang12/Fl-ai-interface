@@ -1,0 +1,35 @@
+/* src/tailwind.css - Tailwind 样式入口 */
+@tailwind base; /* 基础样式重置 */
+@tailwind components; /* 组件样式 */
+@tailwind utilities; /* 工具类样式 */
+
+/* 自定义组件样式 */
+.test-red {
+  @apply text-red-600; /* 使用 @apply 指令 */
+}
+
+.test-blue {
+  @apply text-blue-500;
+}
+
+.test-green-bg {
+  @apply bg-green-200 p-2;
+}
+
+/* 自定义基础样式 */
+@layer base {
+  html {
+    @apply scroll-smooth; /* 平滑滚动 */
+  }
+
+  body {
+    @apply font-sans text-gray-900 bg-white;
+  }
+}
+
+/* 自定义组件样式 */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors;
+  }
+}

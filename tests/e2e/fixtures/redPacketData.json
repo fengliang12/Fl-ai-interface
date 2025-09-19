@@ -1,0 +1,59 @@
+{
+  "validRedPacket": {
+    "amount": 10,
+    "count": 5,
+    "message": "新年快乐，恭喜发财！"
+  },
+  "largeRedPacket": {
+    "amount": 100,
+    "count": 20,
+    "message": "大红包来啦，祝大家工作顺利！"
+  },
+  "smallRedPacket": {
+    "amount": 1,
+    "count": 1,
+    "message": "小小心意，不成敬意"
+  },
+  "invalidRedPacket": {
+    "amount": 0,
+    "count": 0,
+    "message": ""
+  },
+  "testWallets": {
+    "sender": {
+      "address": "0x742d35Cc6634C0532925a3b8D0C9e3e0C8b0e8e8",
+      "privateKey": "test_private_key_sender",
+      "balance": "1000"
+    },
+    "receiver1": {
+      "address": "0x8ba1f109551bD432803012645Hac136c",
+      "privateKey": "test_private_key_receiver1",
+      "balance": "0"
+    },
+    "receiver2": {
+      "address": "0x9ca2f209661cE543904023756Iac247d",
+      "privateKey": "test_private_key_receiver2",
+      "balance": "0"
+    }
+  },
+  "networkConfig": {
+    "chainId": 1337,
+    "networkName": "Localhost 8545",
+    "rpcUrl": "http://localhost:8545",
+    "blockExplorer": "http://localhost:8545"
+  },
+  "contractAddresses": {
+    "redPacket": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "token": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  },
+  "testScenarios": {
+    "happyPath": {
+      "description": "正常创建和领取红包流程",
+      "steps": ["连接钱包", "填写红包信息", "创建红包", "分享红包链接", "其他用户领取红包"]
+    },
+    "errorHandling": {
+      "description": "错误处理测试",
+      "scenarios": ["余额不足", "网络错误", "合约调用失败", "无效输入"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/* src/index.css - 全局样式文件 */
+:root {
+  --mainColor: #3b82f6; /* CSS 自定义属性 */
+  --secondaryColor: #64748b;
+}
+
+/* 全局样式 */
+h1 {
+  color: var(--mainColor);
+}
+
+/* 与 Material-UI 主题集成 */
+.MuiButton-root {
+  text-transform: none !important; /* 禁用 MUI 按钮大写转换 */
+}

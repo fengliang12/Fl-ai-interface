@@ -1,0 +1,112 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 2,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 2,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1758206832187,
+  "success": false,
+  "testResults": [
+    {
+      "leaks": false,
+      "numFailingTests": 2,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1758206870958,
+        "loadTestEnvironmentEnd": 1758206855960,
+        "loadTestEnvironmentStart": 1758206835544,
+        "runtime": 14994,
+        "setupAfterEnvEnd": 1758206869884,
+        "setupAfterEnvStart": 1758206857426,
+        "setupFilesEnd": 1758206855964,
+        "setupFilesStart": 1758206855964,
+        "slow": true,
+        "start": 1758206855964
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "D:\\FL2025\\Fl-ai-interface\\tests\\e2e\\wallet-connection.cy.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "钱包连接 E2E 测试",
+            "钱包连接后的UI显示"
+          ],
+          "duration": 3,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "ReferenceError: cy is not defined\n    at Object.cy (D:\\FL2025\\Fl-ai-interface\\tests\\e2e\\wallet-connection.cy.js:9:5)\n    at Promise.finally.completed (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1556:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1496:10)\n    at _callCircusHook (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:975:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:940:5)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:839:13)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:829:11)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:829:11)\n    at run (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:757:3)\n    at runAndTransformResultsToJestFormat (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1917:21)\n    at jestAdapter (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\runner.js:101:19)\n    at runTestInternal (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-runner@30.1.3\\node_modules\\jest-runner\\build\\index.js:275:16)\n    at runTest (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-runner@30.1.3\\node_modules\\jest-runner\\build\\index.js:343:7)"
+          ],
+          "fullName": "钱包连接 E2E 测试 钱包连接后的UI显示 应该显示钱包信息按钮",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "startAt": 1758206870915,
+          "status": "failed",
+          "title": "应该显示钱包信息按钮"
+        },
+        {
+          "ancestorTitles": [
+            "钱包连接 E2E 测试",
+            "钱包连接后的UI显示"
+          ],
+          "duration": 1,
+          "failing": false,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "ReferenceError: cy is not defined\n    at Object.cy (D:\\FL2025\\Fl-ai-interface\\tests\\e2e\\wallet-connection.cy.js:9:5)\n    at Promise.finally.completed (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1556:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1496:10)\n    at _callCircusHook (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:975:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:940:5)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:839:13)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:829:11)\n    at _runTestsForDescribeBlock (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:829:11)\n    at run (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:757:3)\n    at runAndTransformResultsToJestFormat (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\jestAdapterInit.js:1917:21)\n    at jestAdapter (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-circus@30.1.3_babel-plugin-macros@3.1.0\\node_modules\\jest-circus\\build\\runner.js:101:19)\n    at runTestInternal (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-runner@30.1.3\\node_modules\\jest-runner\\build\\index.js:275:16)\n    at runTest (D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-runner@30.1.3\\node_modules\\jest-runner\\build\\index.js:343:7)"
+          ],
+          "fullName": "钱包连接 E2E 测试 钱包连接后的UI显示 应该显示页面基本元素",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "startAt": 1758206870932,
+          "status": "failed",
+          "title": "应该显示页面基本元素"
+        }
+      ],
+      "failureMessage": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1m钱包连接 E2E 测试 › 钱包连接后的UI显示 › 应该显示钱包信息按钮\u001b[39m\u001b[22m\n\n    ReferenceError: cy is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  7 |\u001b[39m   beforeEach(() \u001b[33m=>\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m     \u001b[90m// 设置MetaMask模拟\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m  9 |\u001b[39m     cy\u001b[33m.\u001b[39msetupMetaMask({\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m       address\u001b[33m:\u001b[39m \u001b[32m'0x742d35Cc6634C0532925a3b8D4C9db96590c6C87'\u001b[39m\u001b[33m,\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m       chainId\u001b[33m:\u001b[39m \u001b[32m'0x1'\u001b[39m\u001b[33m,\u001b[39m \u001b[90m// 主网\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 12 |\u001b[39m       balance\u001b[33m:\u001b[39m \u001b[32m'0x1bc16d674ec80000'\u001b[39m \u001b[90m// 2 ETH\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.cy (\u001b[22m\u001b[2m\u001b[0m\u001b[36mtests/e2e/wallet-connection.cy.js\u001b[39m\u001b[0m\u001b[2m:9:5)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1m钱包连接 E2E 测试 › 钱包连接后的UI显示 › 应该显示页面基本元素\u001b[39m\u001b[22m\n\n    ReferenceError: cy is not defined\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m  7 |\u001b[39m   beforeEach(() \u001b[33m=>\u001b[39m {\u001b[22m\n\u001b[2m     \u001b[90m  8 |\u001b[39m     \u001b[90m// 设置MetaMask模拟\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m  9 |\u001b[39m     cy\u001b[33m.\u001b[39msetupMetaMask({\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 10 |\u001b[39m       address\u001b[33m:\u001b[39m \u001b[32m'0x742d35Cc6634C0532925a3b8D4C9db96590c6C87'\u001b[39m\u001b[33m,\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 11 |\u001b[39m       chainId\u001b[33m:\u001b[39m \u001b[32m'0x1'\u001b[39m\u001b[33m,\u001b[39m \u001b[90m// 主网\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 12 |\u001b[39m       balance\u001b[33m:\u001b[39m \u001b[32m'0x1bc16d674ec80000'\u001b[39m \u001b[90m// 2 ETH\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.cy (\u001b[22m\u001b[2m\u001b[0m\u001b[36mtests/e2e/wallet-connection.cy.js\u001b[39m\u001b[0m\u001b[2m:9:5)\u001b[22m\u001b[2m\u001b[22m\n"
+    }
+  ],
+  "wasInterrupted": false
+}

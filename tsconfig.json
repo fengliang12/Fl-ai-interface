@@ -1,0 +1,41 @@
+// tsconfig.json - 主要配置文件
+{
+  "compilerOptions": {
+    "target": "ES2020", // 编译目标版本
+    "lib": ["DOM", "DOM.Iterable", "ES6"], // 包含的库文件
+    "allowJs": true, // 允许编译JS文件
+    "skipLibCheck": true, // 跳过声明文件的类型检查
+    "esModuleInterop": true, // 启用ES模块互操作性
+    "allowSyntheticDefaultImports": true, // 允许合成默认导入
+    "strict": true, // 启用严格类型检查
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
+    "moduleResolution": "node", // 模块解析策略
+    "resolveJsonModule": true, // 允许导入JSON模块
+    "isolatedModules": true, // 每个文件作为单独模块
+    "noEmit": true, // 不生成输出文件
+    "jsx": "react-jsx", // JSX编译模式 (React 17+)
+    "baseUrl": ".", // 基础URL
+    "paths": {
+      // 路径映射
+      "@/*": ["src/*"] // @/ 映射到 src/
+    },
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
+  "include": ["src"],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/__tests__/**/*",
+    "src/**/__tests__/**/*",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "node_modules",
+    "dist",
+    "build"
+  ]
+}
