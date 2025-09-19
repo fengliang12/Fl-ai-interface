@@ -142,7 +142,7 @@ export const useWallet = () => {
 
     // 获取用户授权
     try {
-      const accounts = await window.ethereum.request({
+      await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
 

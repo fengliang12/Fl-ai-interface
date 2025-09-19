@@ -1,8 +1,8 @@
 {
   "bail": 0,
   "changedFilesWithAncestor": false,
-  "ci": false,
-  "collectCoverage": false,
+  "ci": true,
+  "collectCoverage": true,
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/**/*.d.ts",
@@ -31,7 +31,7 @@
   "onlyChanged": false,
   "onlyFailures": false,
   "openHandlesTimeout": 1000,
-  "passWithNoTests": false,
+  "passWithNoTests": true,
   "projects": [],
   "reporters": [
     ["default", {}],
@@ -52,7 +52,7 @@
   "rootDir": "D:\\FL2025\\Fl-ai-interface",
   "runInBand": false,
   "runTestsByPath": false,
-  "seed": -2090831718,
+  "seed": -1953946311,
   "skipFilter": false,
   "snapshotFormat": {
     "escapeString": false,
@@ -64,7 +64,7 @@
     "type": "TestPathPatterns"
   },
   "testSequencer": "D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\@jest+test-sequencer@30.1.3\\node_modules\\@jest\\test-sequencer\\build\\index.js",
-  "updateSnapshot": "new",
+  "updateSnapshot": "none",
   "useStderr": false,
   "waitForUnhandledRejections": false,
   "watch": false,

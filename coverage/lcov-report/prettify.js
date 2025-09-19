@@ -692,7 +692,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
         t[T] = U;
       } else {
         if (window.console) {
-          console.log('cannot override language handler %s', T);
+          console.warn('cannot override language handler %s', T);
         }
       }
     }

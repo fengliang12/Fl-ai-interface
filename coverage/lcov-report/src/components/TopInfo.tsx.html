@@ -300,7 +300,21 @@
 <a name='L235'></a><a href='#L235'>235</a>
 <a name='L236'></a><a href='#L236'>236</a>
 <a name='L237'></a><a href='#L237'>237</a>
-<a name='L238'></a><a href='#L238'>238</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -341,8 +355,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -402,6 +421,15 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -578,9 +606,14 @@ const TopInfo: React.FC = () =&gt; {
     provider,
   } = useWalletContext();
   // ENS解析
-  const { ensName, ensAvatar, isLoading: ensLoading } = useENS(address, provider);
+  const {
+    ensName,
+    ensAvatar,
+    isLoading: ensLoading,
+  } = useENS(address, provider);
   const [anchorEl, setAnchorEl] = React.useState&lt;null | HTMLElement&gt;(null);
-  const [networkAnchorEl, setNetworkAnchorEl] = React.useState&lt;null | HTMLElement&gt;(null);
+  const [networkAnchorEl, setNetworkAnchorEl] =
+    React.useState&lt;null | HTMLElement&gt;(null);
 &nbsp;
   /**
    * 打开用户菜单
@@ -646,7 +679,11 @@ const TopInfo: React.FC = () =&gt; {
       {/* 顶部导航栏 */}
       &lt;AppBar position="static" className="bg-gray-100 text-gray-800"&gt;
         &lt;Toolbar&gt;
-          &lt;Typography variant="h6" component="div" className="flex-grow text-white"&gt;
+          &lt;Typography
+            variant="h6"
+            component="div"
+            className="flex-grow text-white"
+          &gt;
             红包合约
           &lt;/Typography&gt;
 &nbsp;
@@ -676,7 +713,9 @@ const TopInfo: React.FC = () =&gt; {
             {!isConnected ? (
               &lt;Button
                 variant="contained"
-                startIcon={isConnecting ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;CircularProgress size={16} /&gt; : &lt;W</span>alletIcon /&gt;}
+                startIcon={
+                  isConnecting ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;CircularProgress size={16} /&gt; : &lt;W</span>alletIcon /&gt;
+                }
                 onClick={connectWallet}
                 disabled={isConnecting}
                 className="normal-case"
@@ -706,7 +745,10 @@ const TopInfo: React.FC = () =&gt; {
                     {!ensAvatar &amp;&amp; &lt;AccountCircleIcon /&gt;}
                   &lt;/Avatar&gt;
                   &lt;Box className="flex flex-col items-start"&gt;
-                    &lt;Typography variant="body2" className="font-bold text-black"&gt;
+                    &lt;Typography
+                      variant="body2"
+                      className="font-bold text-black"
+                    &gt;
                       {ensLoading ? <span class="branch-0 cbranch-no" title="branch not covered" >'解析中...' : d</span>isplayName}
                     &lt;/Typography&gt;
                     &lt;Typography variant="caption" className="text-gray-600"&gt;
@@ -781,7 +823,7 @@ export default TopInfo;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-19T07:53:32.077Z
+                at 2025-09-19T09:28:55.069Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

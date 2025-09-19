@@ -50,6 +50,7 @@
     "baseUrl": ".", // 基础URL，用于路径解析
     "paths": {
       // 路径别名，简化导入
+      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@assets/*": ["src/assets/*"],

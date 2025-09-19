@@ -597,12 +597,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ethers } from "ethers";
-import { useCallback, useEffect, useState } from "react";
-import { NETWORKS } from "./config";
-import type { WalletState } from "./index.d";
-export { NETWORKS } from "./config";
-export * from "./index.d";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ethers } from 'ethers';
+import { useCallback, useEffect, useState } from 'react';
+import { NETWORKS } from './config';
+import type { WalletState } from './index.d';
+export { NETWORKS } from './config';
+export * from './index.d';
 &nbsp;
 export const useWallet = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
   const [walletState, setWalletState] = <span class="cstat-no" title="statement not covered" >useState&lt;WalletState&gt;({</span>
@@ -619,7 +619,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
 &nbsp;
   const [isConnecting, setIsConnecting] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
 &nbsp;
-  const [error, setError] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;("");</span>
+  const [error, setError] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;('');</span>
 &nbsp;
   /**
    * 获取网络名称
@@ -627,7 +627,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
   const getNetworkName = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>hainId: string): string =&gt; {</span>
     const networks = <span class="cstat-no" title="statement not covered" >Object.entries(NETWORKS);</span>
     const network = <span class="cstat-no" title="statement not covered" >networks.find(<span class="fstat-no" title="function not covered" >([</span>, config]) =&gt; <span class="cstat-no" title="statement not covered" >config.chainId === chainId);</span></span>
-<span class="cstat-no" title="statement not covered" >    return network ? network[1].chainName : "Unknown Network";</span>
+<span class="cstat-no" title="statement not covered" >    return network ? network[1].chainName : 'Unknown Network';</span>
   };
 &nbsp;
   /**
@@ -658,25 +658,25 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
           signer,
           account: address,
         }));
-<span class="cstat-no" title="statement not covered" >        setError("");</span>
+<span class="cstat-no" title="statement not covered" >        setError('');</span>
       } catch (err: any) {
-<span class="cstat-no" title="statement not covered" >        console.error("Error updating wallet state:", err);</span>
+<span class="cstat-no" title="statement not covered" >        console.error('Error updating wallet state:', err);</span>
         // 更详细的错误处理
 <span class="cstat-no" title="statement not covered" >        if (</span>
-          err?.code === "NETWORK_ERROR" ||
-          err?.message?.includes("network changed")
+          err?.code === 'NETWORK_ERROR' ||
+          err?.message?.includes('network changed')
         ) {
           // 网络切换错误，这是正常现象，不需要显示错误
-<span class="cstat-no" title="statement not covered" >          console.log("Network change detected, will reconnect automatically");</span>
+<span class="cstat-no" title="statement not covered" >          console.log('Network change detected, will reconnect automatically');</span>
 <span class="cstat-no" title="statement not covered" >          return;</span>
         } else <span class="cstat-no" title="statement not covered" >if (err?.code === -32603) {</span>
-<span class="cstat-no" title="statement not covered" >          setError("网络连接问题，请稍后重试");</span>
-        } else <span class="cstat-no" title="statement not covered" >if (err?.message?.includes("circuit breaker")) {</span>
-<span class="cstat-no" title="statement not covered" >          setError("网络请求过于频繁，请稍后重试");</span>
+<span class="cstat-no" title="statement not covered" >          setError('网络连接问题，请稍后重试');</span>
+        } else <span class="cstat-no" title="statement not covered" >if (err?.message?.includes('circuit breaker')) {</span>
+<span class="cstat-no" title="statement not covered" >          setError('网络请求过于频繁，请稍后重试');</span>
         } else <span class="cstat-no" title="statement not covered" >if (err?.code === 4001) {</span>
-<span class="cstat-no" title="statement not covered" >          setError("用户拒绝了连接请求");</span>
+<span class="cstat-no" title="statement not covered" >          setError('用户拒绝了连接请求');</span>
         } else {
-<span class="cstat-no" title="statement not covered" >          setError("钱包连接失败，请检查网络连接");</span>
+<span class="cstat-no" title="statement not covered" >          setError('钱包连接失败，请检查网络连接');</span>
         }
       }
     },
@@ -689,15 +689,15 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
   const switchNetwork = <span class="cstat-no" title="statement not covered" >useCallback(</span>
 <span class="fstat-no" title="function not covered" >    async (n</span>etworkKey: keyof typeof NETWORKS) =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (!window.ethereum) {</span>
-<span class="cstat-no" title="statement not covered" >        setError("请安装 MetaMask 或其他 Web3 钱包");</span>
+<span class="cstat-no" title="statement not covered" >        setError('请安装 MetaMask 或其他 Web3 钱包');</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       const network = <span class="cstat-no" title="statement not covered" >NETWORKS[networkKey];</span>
-<span class="cstat-no" title="statement not covered" >      setError(""); /</span>/ 清除之前的错误
+<span class="cstat-no" title="statement not covered" >      setError(''); /</span>/ 清除之前的错误
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      try {</span>
 <span class="cstat-no" title="statement not covered" >        await window.ethereum.request({</span>
-          method: "wallet_switchEthereumChain",
+          method: 'wallet_switchEthereumChain',
           params: [{ chainId: network.chainId }],
         });
       } catch (switchError: any) {
@@ -705,22 +705,22 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
 <span class="cstat-no" title="statement not covered" >        if (switchError.code === 4902) {</span>
 <span class="cstat-no" title="statement not covered" >          try {</span>
 <span class="cstat-no" title="statement not covered" >            await window.ethereum.request({</span>
-              method: "wallet_addEthereumChain",
+              method: 'wallet_addEthereumChain',
               params: [network],
             });
           } catch (addError: any) {
-<span class="cstat-no" title="statement not covered" >            console.error("Error adding network:", addError);</span>
+<span class="cstat-no" title="statement not covered" >            console.error('Error adding network:', addError);</span>
 <span class="cstat-no" title="statement not covered" >            if (addError.code === 4001) {</span>
-<span class="cstat-no" title="statement not covered" >              setError("用户拒绝了添加网络的请求");</span>
+<span class="cstat-no" title="statement not covered" >              setError('用户拒绝了添加网络的请求');</span>
             } else {
-<span class="cstat-no" title="statement not covered" >              setError("添加网络失败，请手动添加");</span>
+<span class="cstat-no" title="statement not covered" >              setError('添加网络失败，请手动添加');</span>
             }
           }
         } else <span class="cstat-no" title="statement not covered" >if (switchError.code === 4001) {</span>
-<span class="cstat-no" title="statement not covered" >          setError("用户拒绝了切换网络的请求");</span>
+<span class="cstat-no" title="statement not covered" >          setError('用户拒绝了切换网络的请求');</span>
         } else {
-<span class="cstat-no" title="statement not covered" >          console.error("Error switching network:", switchError);</span>
-<span class="cstat-no" title="statement not covered" >          setError("网络切换失败，请重试");</span>
+<span class="cstat-no" title="statement not covered" >          console.error('Error switching network:', switchError);</span>
+<span class="cstat-no" title="statement not covered" >          setError('网络切换失败，请重试');</span>
         }
       }
     },
@@ -732,17 +732,17 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
    */
   const connectWallet = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    setIsConnecting(true);</span>
-<span class="cstat-no" title="statement not covered" >    setError("");</span>
+<span class="cstat-no" title="statement not covered" >    setError('');</span>
 <span class="cstat-no" title="statement not covered" >    if (!window.ethereum) {</span>
-<span class="cstat-no" title="statement not covered" >      setError("请安装 MetaMask 或其他 Web3 钱包");</span>
+<span class="cstat-no" title="statement not covered" >      setError('请安装 MetaMask 或其他 Web3 钱包');</span>
 <span class="cstat-no" title="statement not covered" >      setIsConnecting(false);</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
     // 获取用户授权
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const accounts = <span class="cstat-no" title="statement not covered" >await window.ethereum.request({</span>
-        method: "eth_requestAccounts",
+<span class="cstat-no" title="statement not covered" >      await window.ethereum.request({</span>
+        method: 'eth_requestAccounts',
       });
 &nbsp;
       // 创建一个 ethers 提供程序
@@ -754,11 +754,11 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
 <span class="cstat-no" title="statement not covered" >      if (err.code === 4001) {</span>
         // EIP-1193 userRejectedRequest error.
         // If this happens, the user rejected the connection request.
-<span class="cstat-no" title="statement not covered" >        console.log("Please connect to MetaMask.");</span>
-<span class="cstat-no" title="statement not covered" >        setError("用户拒绝了连接请求");</span>
+<span class="cstat-no" title="statement not covered" >        console.log('Please connect to MetaMask.');</span>
+<span class="cstat-no" title="statement not covered" >        setError('用户拒绝了连接请求');</span>
       } else {
 <span class="cstat-no" title="statement not covered" >        console.error(err);</span>
-<span class="cstat-no" title="statement not covered" >        setError("钱包连接失败，请重试");</span>
+<span class="cstat-no" title="statement not covered" >        setError('钱包连接失败，请重试');</span>
       }
     } finally {
 <span class="cstat-no" title="statement not covered" >      setIsConnecting(false);</span>
@@ -778,7 +778,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
     const handleAccountsChanged = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>ccounts: string[]) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      if (accounts.length === 0) {</span>
         // MetaMask is locked or the user has not connected any accounts.
-<span class="cstat-no" title="statement not covered" >        console.log("Please connect to MetaMask.");</span>
+<span class="cstat-no" title="statement not covered" >        console.log('Please connect to MetaMask.');</span>
 <span class="cstat-no" title="statement not covered" >        disconnectWallet();</span>
       } else <span class="cstat-no" title="statement not covered" >if (accounts[0] !== walletState.account) {</span>
 <span class="cstat-no" title="statement not covered" >        setWalletState({</span>
@@ -790,7 +790,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
         }
       }
     };
-<span class="cstat-no" title="statement not covered" >    window.ethereum.on("accountsChanged", handleAccountsChanged);</span>
+<span class="cstat-no" title="statement not covered" >    window.ethereum.on('accountsChanged', handleAccountsChanged);</span>
 &nbsp;
     // 监听网络变化
     const handleChainChanged = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async () =&gt; {</span></span>
@@ -799,16 +799,16 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
         const newProvider = <span class="cstat-no" title="statement not covered" >new ethers.BrowserProvider(window.ethereum);</span>
 <span class="cstat-no" title="statement not covered" >        await updateWalletState(newProvider);</span>
       } catch (err) {
-<span class="cstat-no" title="statement not covered" >        console.error("Error handling chain change:", err);</span>
+<span class="cstat-no" title="statement not covered" >        console.error('Error handling chain change:', err);</span>
         // 网络切换错误时，重置连接状态
-<span class="cstat-no" title="statement not covered" >        setError("网络切换失败，请重新连接钱包");</span>
+<span class="cstat-no" title="statement not covered" >        setError('网络切换失败，请重新连接钱包');</span>
       }
     };
-<span class="cstat-no" title="statement not covered" >    window.ethereum.on("chainChanged", handleChainChanged);</span>
+<span class="cstat-no" title="statement not covered" >    window.ethereum.on('chainChanged', handleChainChanged);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      window.ethereum.removeListener("chainChanged", handleChainChanged);</span>
-<span class="cstat-no" title="statement not covered" >      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);</span>
+<span class="cstat-no" title="statement not covered" >      window.ethereum.removeListener('chainChanged', handleChainChanged);</span>
+<span class="cstat-no" title="statement not covered" >      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);</span>
     };
   }, [walletState.provider]);
 &nbsp;
@@ -828,7 +828,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
       account: null,
       networks: NETWORKS,
     });
-<span class="cstat-no" title="statement not covered" >    setError("");</span>
+<span class="cstat-no" title="statement not covered" >    setError('');</span>
   }, []);
 &nbsp;
   /**
@@ -841,14 +841,14 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
 <span class="cstat-no" title="statement not covered" >      try {</span>
         // 检查是否已连接
         const accounts = <span class="cstat-no" title="statement not covered" >await window.ethereum.request({</span>
-          method: "eth_accounts",
+          method: 'eth_accounts',
         });
 <span class="cstat-no" title="statement not covered" >        if (accounts.length &gt; 0) {</span>
           const provider = <span class="cstat-no" title="statement not covered" >new ethers.BrowserProvider(window.ethereum);</span>
 <span class="cstat-no" title="statement not covered" >          await updateWalletState(provider);</span>
         }
       } catch (err) {
-<span class="cstat-no" title="statement not covered" >        console.error("Error checking connection:", err);</span>
+<span class="cstat-no" title="statement not covered" >        console.error('Error checking connection:', err);</span>
       }
     };
 &nbsp;
@@ -871,7 +871,7 @@ export const useWallet = <span class="cstat-no" title="statement not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-19T07:53:32.077Z
+                at 2025-09-19T09:28:55.069Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
