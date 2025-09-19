@@ -39,9 +39,14 @@ const TopInfo: React.FC = () => {
     provider,
   } = useWalletContext();
   // ENS解析
-  const { ensName, ensAvatar, isLoading: ensLoading } = useENS(address, provider);
+  const {
+    ensName,
+    ensAvatar,
+    isLoading: ensLoading,
+  } = useENS(address, provider);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [networkAnchorEl, setNetworkAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [networkAnchorEl, setNetworkAnchorEl] =
+    React.useState<null | HTMLElement>(null);
 
   /**
    * 打开用户菜单
@@ -107,7 +112,11 @@ const TopInfo: React.FC = () => {
       {/* 顶部导航栏 */}
       <AppBar position="static" className="bg-gray-100 text-gray-800">
         <Toolbar>
-          <Typography variant="h6" component="div" className="flex-grow text-white">
+          <Typography
+            variant="h6"
+            component="div"
+            className="flex-grow text-white"
+          >
             红包合约
           </Typography>
 
@@ -137,7 +146,9 @@ const TopInfo: React.FC = () => {
             {!isConnected ? (
               <Button
                 variant="contained"
-                startIcon={isConnecting ? <CircularProgress size={16} /> : <WalletIcon />}
+                startIcon={
+                  isConnecting ? <CircularProgress size={16} /> : <WalletIcon />
+                }
                 onClick={connectWallet}
                 disabled={isConnecting}
                 className="normal-case"
@@ -167,7 +178,10 @@ const TopInfo: React.FC = () => {
                     {!ensAvatar && <AccountCircleIcon />}
                   </Avatar>
                   <Box className="flex flex-col items-start">
-                    <Typography variant="body2" className="font-bold text-black">
+                    <Typography
+                      variant="body2"
+                      className="font-bold text-black"
+                    >
                       {ensLoading ? '解析中...' : displayName}
                     </Typography>
                     <Typography variant="caption" className="text-gray-600">

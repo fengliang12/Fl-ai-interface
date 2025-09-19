@@ -1,12 +1,20 @@
 import { CardGiftcard, Send } from '@mui/icons-material';
-import { Alert, Box, Button, CircularProgress, Divider, Paper, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { ethers } from 'ethers';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
-import type React from 'react';
 import RedPacketContract from '../abis/RedPacket';
 import { useWalletContext } from '../contexts/WalletContext';
 import { redPacketContractAtom } from './AddRedPacket';
+import React from 'react';
 
 import { BigNumber } from '@ethersproject/bignumber';
 
@@ -29,7 +37,11 @@ const SendRedPacket: React.FC = () => {
   const getContractBalance = async () => {
     if (!signer) return;
     try {
-      const contract = new ethers.Contract(RED_PACKET_ADDRESS!, RedPacketABI, signer);
+      const contract = new ethers.Contract(
+        RED_PACKET_ADDRESS,
+        RedPacketABI,
+        signer
+      );
       const balance = await contract.getBalance();
       const count = await contract.count();
       const isEqual = await contract.isEqual();
@@ -38,7 +50,7 @@ const SendRedPacket: React.FC = () => {
       setRedPacketState({
         ...redPacketState,
         count: ethers.formatUnits(count, 0),
-        address: RED_PACKET_ADDRESS!,
+        address: RED_PACKET_ADDRESS,
         isEqual: isEqual,
         balance: ethers.formatEther(balance),
       });
@@ -57,7 +69,10 @@ const SendRedPacket: React.FC = () => {
     let eventListenerActive = true;
 
     const handleAlreadyEvent = (sender: string) => {
-      if (sender.toLowerCase() === address?.toLowerCase() && eventListenerActive) {
+      if (
+        sender.toLowerCase() === address?.toLowerCase() &&
+        eventListenerActive
+      ) {
         alreadyEventTriggered = true;
         setError('您已经抢过红包了（事件监听检测到）~');
       }
@@ -76,13 +91,19 @@ const SendRedPacket: React.FC = () => {
   };
 
   // 检查交易日志中的Already事件
-  const checkAlreadyEventInLogs = (contract: ethers.Contract, transactionReceipt: any) => {
+  const checkAlreadyEventInLogs = (
+    contract: ethers.Contract,
+    transactionReceipt: any
+  ) => {
     for (const log of transactionReceipt.logs) {
       try {
         const parsedLog = contract.interface.parseLog(log);
         if (parsedLog?.name === 'Already') {
           const eventSender = parsedLog.args?.sender;
-          if (eventSender && eventSender.toLowerCase() === address?.toLowerCase()) {
+          if (
+            eventSender &&
+            eventSender.toLowerCase() === address?.toLowerCase()
+          ) {
             setError('您已经抢过红包了（交易日志检测到）~');
             return true;
           }
@@ -104,7 +125,11 @@ const SendRedPacket: React.FC = () => {
     setSuccess(null);
 
     try {
-      const contract = new ethers.Contract(RED_PACKET_ADDRESS!, RedPacketABI, signer);
+      const contract = new ethers.Contract(
+        RED_PACKET_ADDRESS,
+        RedPacketABI,
+        signer
+      );
       const _count = await contract.count();
       if (_count == zero) {
         setError('红包已抢完~');
@@ -138,7 +163,10 @@ const SendRedPacket: React.FC = () => {
         eventListener.cleanup();
       }
     } catch (error: any) {
-      if (error.reason === 'Already grabbed' || (error.message && error.message.includes('Already'))) {
+      if (
+        error.reason === 'Already grabbed' ||
+        (error.message && error.message.includes('Already'))
+      ) {
         setError('您已经抢过红包了~');
       } else {
         setError(`抢红包失败: ${error.message || error.reason || error}`);
@@ -154,7 +182,11 @@ const SendRedPacket: React.FC = () => {
       <Typography variant="h6" className="mb-2 font-semibold">
         发红包
       </Typography>
-      <Typography variant="body2" className="text-gray-600" style={{ marginBottom: '0px' }}>
+      <Typography
+        variant="body2"
+        className="text-gray-600"
+        style={{ marginBottom: '0px' }}
+      >
         创建新的红包，与朋友分享快乐
       </Typography>
 
@@ -187,7 +219,9 @@ const SendRedPacket: React.FC = () => {
               size="large"
               onClick={getRedPacket}
               disabled={!isConnected || isDepositing}
-              startIcon={isDepositing ? <CircularProgress size={20} /> : <Send />}
+              startIcon={
+                isDepositing ? <CircularProgress size={20} /> : <Send />
+              }
             >
               {isDepositing ? '抢红包中...' : '抢红包'}
             </Button>

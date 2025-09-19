@@ -1,6 +1,6 @@
-const { renderHook, act, waitFor } = require('@testing-library/react');
-const { useWallet } = require('../../../src/hooks/useWallet');
-const { ethers } = require('ethers');
+import { renderHook, act, waitFor } from '@testing-library/react';
+import { useWallet } from '../../../src/hooks/useWallet';
+import { ethers } from 'ethers';
 
 // Mock ethers
 const mockSigner = {

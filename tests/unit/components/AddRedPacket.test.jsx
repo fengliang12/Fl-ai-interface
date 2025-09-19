@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'jotai';
-import AddRedPacket from '../../../src/components/AddRedPacket';
+import AddRedPacket from '../../../src/components/AddRedPacket.tsx';
 
 // Mock Material-UI components
 jest.mock('@mui/material', () => ({
@@ -82,8 +82,8 @@ jest.mock('jotai', () => ({
 }));
 
 // Mock the RED_PACKET_ADDRESS constant
-jest.mock('../../../src/components/AddRedPacket', () => {
-  const actual = jest.requireActual('../../../src/components/AddRedPacket');
+jest.mock('../../../src/components/AddRedPacket.tsx', () => {
+  const actual = jest.requireActual('../../../src/components/AddRedPacket.tsx');
   return {
     __esModule: true,
     default: actual.default,

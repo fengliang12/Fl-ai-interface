@@ -53,14 +53,15 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+          boxShadow:
+            '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
         },
       },
     },
   },
 });
 
-ReactDOM.createRoot(document.getElementById('app')!).render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <React.StrictMode>
     <WalletProvider>
       <ThemeProvider theme={theme}>
@@ -68,5 +69,5 @@ ReactDOM.createRoot(document.getElementById('app')!).render(
         <App />
       </ThemeProvider>
     </WalletProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 import { useAtom } from 'jotai';
-import type React from 'react';
 import { redPacketContractAtom } from './AddRedPacket';
+import React from 'react';
 
 const Dashboard: React.FC = () => {
   const [redPacketState] = useAtom(redPacketContractAtom);
@@ -38,14 +38,20 @@ const Dashboard: React.FC = () => {
         </Paper>
         <Paper
           className="p-4 text-center h-full cursor-pointer hover:shadow-lg transition-shadow"
-          onClick={() => window.open(`https://sepolia.etherscan.io/address/${redPacketState?.address}`, '_blank')}
+          onClick={() =>
+            window.open(
+              `https://sepolia.etherscan.io/address/${redPacketState?.address}`,
+              '_blank'
+            )
+          }
         >
           <Typography
             variant="h4"
             className="font-bold text-orange-600 hover:text-orange-700 transition-colors"
             title="点击查看合约详情"
           >
-            {redPacketState?.address?.slice(0, 4)}...{redPacketState?.address?.slice(-4)}
+            {redPacketState?.address?.slice(0, 4)}...
+            {redPacketState?.address?.slice(-4)}
           </Typography>
           <Typography variant="body2" className="text-gray-600">
             红包合约地址（点击查看）

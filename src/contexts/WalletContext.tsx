@@ -1,6 +1,6 @@
-import type React from 'react';
 import { type ReactNode, createContext, useContext } from 'react';
 import { type NETWORKS, type WalletState, useWallet } from '../hooks/useWallet';
+import React from 'react';
 
 interface WalletContextType extends WalletState {
   isConnecting: boolean;
@@ -18,7 +18,11 @@ interface WalletProviderProps {
 
 const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const walletState = useWallet();
-  return <WalletContext.Provider value={{ ...walletState }}>{children}</WalletContext.Provider>;
+  return (
+    <WalletContext.Provider value={{ ...walletState }}>
+      {children}
+    </WalletContext.Provider>
+  );
 };
 
 export default WalletProvider;

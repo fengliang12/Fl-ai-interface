@@ -1,39 +1,37 @@
-// Mock（模拟）连接器类 - 用于测试时替代真实的外部依赖
-// Mock是Jest的重要概念，用于创建假的对象来替代真实的依赖项
-class MockMetaMask {
-  constructor() {
-    this.provider = null;
-    // jest.fn(): 创建一个Jest模拟函数，可以追踪函数调用
-    this.activate = jest.fn();
-    this.deactivate = jest.fn();
-  }
-}
-
-class MockWalletConnect {
-  constructor() {
-    this.provider = null;
-    // jest.fn(): 创建模拟函数，用于测试时替代真实方法
-    this.activate = jest.fn();
-    this.deactivate = jest.fn();
-  }
-}
-
 // jest.mock(): Jest的模块模拟函数，用于替换整个模块的导出
+// 这里我们模拟@web3-react/metamask模块，让它返回我们的Mock类
 // 第一个参数是要模拟的模块路径，第二个参数是返回模拟对象的函数
 jest.mock('@web3-react/metamask', () => ({
-  MetaMask: MockMetaMask,
+  MetaMask: class MockMetaMask {
+    constructor() {
+      this.provider = null;
+      // jest.fn(): 创建一个Jest模拟函数，可以追踪函数调用
+      this.activate = jest.fn();
+      this.deactivate = jest.fn();
+    }
+  },
 }));
 
 // jest.mock(): Jest的模块模拟函数，用于替换整个模块的导出
+// 这里我们模拟@web3-react/walletconnect模块
 jest.mock('@web3-react/walletconnect', () => ({
-  WalletConnect: MockWalletConnect,
+  WalletConnect: class MockWalletConnect {
+    constructor() {
+      this.provider = null;
+      this.activate = jest.fn();
+      this.deactivate = jest.fn();
+    }
+  },
 }));
+
+// Mock（模拟）连接器类 - 用于测试时替代真实的外部依赖
+// Mock是Jest的重要概念，用于创建假的对象来替代真实的依赖项
 
 // 在模拟之后导入 - 确保导入的是被模拟的版本
 // 注意：必须在jest.mock()调用之后导入，这样才能获取到模拟的模块
-const getName = require('../../../src/utils/getName').default;
-const { MetaMask } = require('@web3-react/metamask');
-const { WalletConnect: WalletConnectV2 } = require('@web3-react/walletconnect');
+import getName from '../../../src/utils/getName';
+import { MetaMask } from '@web3-react/metamask';
+import { WalletConnect as WalletConnectV2 } from '@web3-react/walletconnect';
 
 // describe: 创建测试套件，组织相关的测试用例
 describe('getName', () => {

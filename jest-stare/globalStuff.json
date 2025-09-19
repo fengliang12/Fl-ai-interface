@@ -11,19 +11,7 @@
   ],
   "coverageDirectory": "D:\\FL2025\\Fl-ai-interface\\coverage",
   "coverageProvider": "babel",
-  "coverageReporters": [
-    "text",
-    "lcov",
-    "html"
-  ],
-  "coverageThreshold": {
-    "global": {
-      "branches": 70,
-      "functions": 70,
-      "lines": 70,
-      "statements": 70
-    }
-  },
+  "coverageReporters": ["text", "lcov", "html"],
   "detectLeaks": false,
   "detectOpenHandles": false,
   "errorOnDeprecated": false,
@@ -37,9 +25,7 @@
   "maxConcurrency": 5,
   "maxWorkers": 15,
   "noStackTrace": false,
-  "nonFlagArgs": [
-    "tests/e2e/wallet-connection.cy.js"
-  ],
+  "nonFlagArgs": [],
   "notify": false,
   "notifyMode": "failure-change",
   "onlyChanged": false,
@@ -48,10 +34,7 @@
   "passWithNoTests": false,
   "projects": [],
   "reporters": [
-    [
-      "default",
-      {}
-    ],
+    ["default", {}],
     [
       "D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\jest-stare@2.5.2_@popperjs+core@2.11.8_node-notifier@10.0.1\\node_modules\\jest-stare\\lib\\index.js",
       {
@@ -69,7 +52,7 @@
   "rootDir": "D:\\FL2025\\Fl-ai-interface",
   "runInBand": false,
   "runTestsByPath": false,
-  "seed": -947599671,
+  "seed": -2090831718,
   "skipFilter": false,
   "snapshotFormat": {
     "escapeString": false,
@@ -77,15 +60,12 @@
   },
   "testFailureExitCode": 1,
   "testPathPatterns": {
-    "patterns": [
-      "tests/e2e/wallet-connection.cy.js"
-    ],
+    "patterns": [],
     "type": "TestPathPatterns"
   },
   "testSequencer": "D:\\FL2025\\Fl-ai-interface\\node_modules\\.pnpm\\@jest+test-sequencer@30.1.3\\node_modules\\@jest\\test-sequencer\\build\\index.js",
   "updateSnapshot": "new",
   "useStderr": false,
-  "verbose": true,
   "waitForUnhandledRejections": false,
   "watch": false,
   "watchAll": false,

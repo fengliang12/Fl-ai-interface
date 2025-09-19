@@ -8,7 +8,11 @@ export const NETWORKS = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://eth.llamarpc.com', 'https://rpc.ankr.com/eth', 'https://ethereum.publicnode.com'],
+    rpcUrls: [
+      'https://eth.llamarpc.com',
+      'https://rpc.ankr.com/eth',
+      'https://ethereum.publicnode.com',
+    ],
     blockExplorerUrls: ['https://etherscan.io'],
   },
   sepolia: {

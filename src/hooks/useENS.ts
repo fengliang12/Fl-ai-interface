@@ -14,7 +14,10 @@ interface ENSResult {
  * @param provider ethers provider
  * @returns ENS解析结果
  */
-export const useENS = (address: string | null, provider: ethers.BrowserProvider | null): ENSResult => {
+export const useENS = (
+  address: string | null,
+  provider: ethers.BrowserProvider | null
+): ENSResult => {
   const [ensName, setEnsName] = useState<string | null>(null);
   const [ensAvatar, setEnsAvatar] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,14 +51,14 @@ export const useENS = (address: string | null, provider: ethers.BrowserProvider 
               setEnsAvatar(avatar || null);
             }
           } catch (avatarErr) {
-            console.warn('ENS头像解析失败:', avatarErr);
+            console.log('ENS头像解析失败:', avatarErr);
             setEnsAvatar(null);
           }
         } else {
           setEnsAvatar(null);
         }
       } catch (err) {
-        console.warn('ENS解析失败:', err);
+        console.log('ENS解析失败:', err);
         setError('ENS解析失败');
         setEnsName(null);
         setEnsAvatar(null);
@@ -76,7 +79,10 @@ export const useENS = (address: string | null, provider: ethers.BrowserProvider 
  * @param ensName ENS域名
  * @returns 格式化的显示名称
  */
-export const formatDisplayName = (address: string | null, ensName: string | null): string => {
+export const formatDisplayName = (
+  address: string | null,
+  ensName: string | null
+): string => {
   if (!address) return '';
 
   // 如果有ENS域名，优先显示ENS域名

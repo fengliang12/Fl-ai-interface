@@ -1,41 +1,67 @@
-// tsconfig.json - 主要配置文件
+/* TypeScript配置文件 */
 {
   "compilerOptions": {
-    "target": "ES2020", // 编译目标版本
-    "lib": ["DOM", "DOM.Iterable", "ES6"], // 包含的库文件
-    "allowJs": true, // 允许编译JS文件
-    "skipLibCheck": true, // 跳过声明文件的类型检查
-    "esModuleInterop": true, // 启用ES模块互操作性
-    "allowSyntheticDefaultImports": true, // 允许合成默认导入
-    "strict": true, // 启用严格类型检查
+    /* 编译目标 */
+    "target": "ESNext", // 编译到最新的ES标准
+    "lib": ["dom", "esnext"], // 包含DOM和ESNext的类型定义
+
+    /* 编译优化 */
+    "incremental": true, // 增量编译，提高编译速度
+    "sourceMap": true, // 生成源码映射，便于调试
+    "importHelpers": true, // 使用辅助函数库，减小体积
+
+    /* 代码质量检查 */
+    "noUnusedLocals": true, // 禁止未使用的局部变量
+    "noUnusedParameters": true, // 禁止未使用的函数参数
+    "noImplicitReturns": true, // 禁止函数没有明确返回值
+    "experimentalDecorators": true, // 启用装饰器语法
+
+    /* JavaScript支持 */
+    "allowJs": true, // 允许编译JavaScript文件
+    "skipLibCheck": true, // 跳过库文件类型检查，加快编译
+
+    /* 模块兼容性 */
+    "esModuleInterop": true, // 允许ES模块与CommonJS模块互操作
+    "allowSyntheticDefaultImports": true, // 允许从没有默认导出的模块导入
+
+    /* 类型检查严格度 */
+    "strict": true, // 启用所有严格类型检查选项
+    "noImplicitAny": true, // 禁止隐式any类型
+    "strictNullChecks": true, // 严格的null检查
+    "noImplicitThis": true, // 禁止this隐式any类型
+
+    /* 其他检查 */
     "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
-    "moduleResolution": "node", // 模块解析策略
+    "noFallthroughCasesInSwitch": true, // 禁止switch穿透
+
+    /* 模块设置 */
+    "module": "esnext", // 使用ESNext模块系统
+    "moduleResolution": "node", // 使用Node.js模块解析策略
+    "downlevelIteration": true, // 降级迭代器实现，兼容旧环境
     "resolveJsonModule": true, // 允许导入JSON模块
-    "isolatedModules": true, // 每个文件作为单独模块
-    "noEmit": true, // 不生成输出文件
-    "jsx": "react-jsx", // JSX编译模式 (React 17+)
-    "baseUrl": ".", // 基础URL
+    "isolatedModules": true, // 将每个文件作为单独的模块
+    "noEmit": true, // 不输出编译文件，由Webpack处理
+
+    /* React设置 */
+    "jsx": "react-jsx", // 使用React JSX转换
+
+    /* 路径设置 */
+    "rootDir": ".", // 项目根目录
+    "baseUrl": ".", // 基础URL，用于路径解析
     "paths": {
-      // 路径映射
-      "@/*": ["src/*"] // @/ 映射到 src/
-    },
-    "types": ["node"],
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+      // 路径别名，简化导入
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@states/*": ["src/states/*"],
+      "@abis/*": ["src/abis/*"],
+      "@utils/*": ["src/utils/*"],
+      "@connectors/*": ["src/connectors/*"]
+    }
   },
-  "include": ["src"],
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/__tests__/**/*",
-    "src/**/__tests__/**/*",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.ts",
-    "src/**/*.spec.tsx",
-    "node_modules",
-    "dist",
-    "build"
-  ]
+  /* 文件包含与排除 */
+  "include": ["src", "tests"], // 包含的文件夹
+  "exclude": ["node_modules", "dist", "scripts"] // 排除的文件夹
 }

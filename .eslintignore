@@ -1,0 +1,10 @@
+# .eslintignore - 忽略文件配置
+node_modules/
+dist/
+build/
+coverage/
+*.min.js
+*.bundle.js
+public/
+.storybook/
+storybook-static/

@@ -1,9 +1,9 @@
 // 导入React Testing Library的Hook测试工具
 // renderHook: 用于测试自定义Hook的函数
 // waitFor: 等待异步操作完成的工具函数
-const { renderHook, waitFor } = require('@testing-library/react');
-const { useENS, formatDisplayName } = require('../../../src/hooks/useENS');
-const { ethers } = require('ethers');
+import { renderHook, waitFor } from '@testing-library/react';
+import { useENS, formatDisplayName } from '../../../src/hooks/useENS';
+import { ethers } from 'ethers';
 
 // 创建模拟的ethers provider对象
 // 这些模拟对象用于替代真实的区块链交互

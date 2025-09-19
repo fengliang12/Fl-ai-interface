@@ -34,93 +34,99 @@ export const useWallet = () => {
   /**
    * 获取钱包状态
    */
-  const updateWalletState = useCallback(async (provider: ethers.BrowserProvider) => {
-    try {
-      // 使用重试机制获取签名者
-      const signer = await provider.getSigner();
-      // 钱包地址
-      const address = await signer.getAddress();
-      //查询账户余额
-      const balance = await provider.getBalance(address);
-      // 获取当前网络信息
-      const network = await provider.getNetwork();
-      // 主网id
-      const chainId = `0x${network.chainId.toString(16)}`;
+  const updateWalletState = useCallback(
+    async (provider: ethers.BrowserProvider) => {
+      try {
+        // 使用重试机制获取签名者
+        const signer = await provider.getSigner();
+        // 钱包地址
+        const address = await signer.getAddress();
+        //查询账户余额
+        const balance = await provider.getBalance(address);
+        // 获取当前网络信息
+        const network = await provider.getNetwork();
+        // 主网id
+        const chainId = `0x${network.chainId.toString(16)}`;
 
-      console.log('获取的钱包基本信息', network, balance, address);
-      console.log('钱包余额转换前后', balance, ethers.formatEther(balance));
-
-      setWalletState((pre) => ({
-        ...pre,
-        isConnected: true,
-        address,
-        balance: ethers.formatEther(balance),
-        chainId,
-        networkName: getNetworkName(chainId),
-        provider,
-        signer,
-        account: address,
-      }));
-      setError('');
-    } catch (err: any) {
-      console.error('Error updating wallet state:', err);
-      // 更详细的错误处理
-      if (err?.code === 'NETWORK_ERROR' || err?.message?.includes('network changed')) {
-        // 网络切换错误，这是正常现象，不需要显示错误
-        console.log('Network change detected, will reconnect automatically');
-        return;
-      } else if (err?.code === -32603) {
-        setError('网络连接问题，请稍后重试');
-      } else if (err?.message?.includes('circuit breaker')) {
-        setError('网络请求过于频繁，请稍后重试');
-      } else if (err?.code === 4001) {
-        setError('用户拒绝了连接请求');
-      } else {
-        setError('钱包连接失败，请检查网络连接');
+        setWalletState((pre) => ({
+          ...pre,
+          isConnected: true,
+          address,
+          balance: ethers.formatEther(balance),
+          chainId,
+          networkName: getNetworkName(chainId),
+          provider,
+          signer,
+          account: address,
+        }));
+        setError('');
+      } catch (err: any) {
+        console.error('Error updating wallet state:', err);
+        // 更详细的错误处理
+        if (
+          err?.code === 'NETWORK_ERROR' ||
+          err?.message?.includes('network changed')
+        ) {
+          // 网络切换错误，这是正常现象，不需要显示错误
+          console.log('Network change detected, will reconnect automatically');
+          return;
+        } else if (err?.code === -32603) {
+          setError('网络连接问题，请稍后重试');
+        } else if (err?.message?.includes('circuit breaker')) {
+          setError('网络请求过于频繁，请稍后重试');
+        } else if (err?.code === 4001) {
+          setError('用户拒绝了连接请求');
+        } else {
+          setError('钱包连接失败，请检查网络连接');
+        }
       }
-    }
-  }, []);
+    },
+    []
+  );
 
   /**
    * 选择网络
    */
-  const switchNetwork = useCallback(async (networkKey: keyof typeof NETWORKS) => {
-    if (!window.ethereum) {
-      setError('请安装 MetaMask 或其他 Web3 钱包');
-      return;
-    }
-    const network = NETWORKS[networkKey];
-    setError(''); // 清除之前的错误
-
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: network.chainId }],
-      });
-    } catch (switchError: any) {
-      // 如果网络不存在，尝试添加网络
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [network],
-          });
-        } catch (addError: any) {
-          console.error('Error adding network:', addError);
-          if (addError.code === 4001) {
-            setError('用户拒绝了添加网络的请求');
-          } else {
-            setError('添加网络失败，请手动添加');
-          }
-        }
-      } else if (switchError.code === 4001) {
-        setError('用户拒绝了切换网络的请求');
-      } else {
-        console.error('Error switching network:', switchError);
-        setError('网络切换失败，请重试');
+  const switchNetwork = useCallback(
+    async (networkKey: keyof typeof NETWORKS) => {
+      if (!window.ethereum) {
+        setError('请安装 MetaMask 或其他 Web3 钱包');
+        return;
       }
-    }
-  }, []);
+      const network = NETWORKS[networkKey];
+      setError(''); // 清除之前的错误
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: network.chainId }],
+        });
+      } catch (switchError: any) {
+        // 如果网络不存在，尝试添加网络
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [network],
+            });
+          } catch (addError: any) {
+            console.error('Error adding network:', addError);
+            if (addError.code === 4001) {
+              setError('用户拒绝了添加网络的请求');
+            } else {
+              setError('添加网络失败，请手动添加');
+            }
+          }
+        } else if (switchError.code === 4001) {
+          setError('用户拒绝了切换网络的请求');
+        } else {
+          console.error('Error switching network:', switchError);
+          setError('网络切换失败，请重试');
+        }
+      }
+    },
+    []
+  );
 
   /**
    * 连接钱包
@@ -128,8 +134,6 @@ export const useWallet = () => {
   const connectWallet = useCallback(async () => {
     setIsConnecting(true);
     setError('');
-    console.log(333, window.ethereum);
-
     if (!window.ethereum) {
       setError('请安装 MetaMask 或其他 Web3 钱包');
       setIsConnecting(false);
@@ -141,7 +145,6 @@ export const useWallet = () => {
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
-      console.log('账户信息', accounts);
 
       // 创建一个 ethers 提供程序
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -183,7 +186,9 @@ export const useWallet = () => {
           ...walletState,
           account: accounts[0],
         });
-        updateWalletState(walletState.provider!);
+        if (walletState.provider) {
+          updateWalletState(walletState.provider);
+        }
       }
     };
     window.ethereum.on('accountsChanged', handleAccountsChanged);
@@ -232,8 +237,6 @@ export const useWallet = () => {
    */
   useEffect(() => {
     const checkConnection = async () => {
-      console.log(222, window.ethereum);
-
       if (!window.ethereum) return;
 
       try {

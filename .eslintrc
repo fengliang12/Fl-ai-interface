@@ -1,0 +1,54 @@
+{
+  /* extends: 继承的规则集 */
+  "extends": [
+    "airbnb-typescript", /* Airbnb的TypeScript规则 - 提供行业标准的代码风格 */
+    "plugin:react-hooks/recommended", /* React Hooks规则 - 确保正确使用React Hooks */
+    "plugin:@typescript-eslint/recommended", /* TypeScript推荐规则 - 提供TS特定的检查 */
+    "plugin:jest/recommended", /* Jest测试规则 - 确保测试代码质量 */
+    "prettier", /* Prettier规则 - 禁用与Prettier冲突的规则 */
+    "plugin:prettier/recommended" /* Prettier推荐配置 - 将Prettier作为ESLint规则运行 */
+  ],
+
+  /* plugins: 启用的ESLint插件 */
+  "plugins": [
+    "react", /* React插件 - 提供React特定的检查规则 */
+    "@typescript-eslint", /* TypeScript插件 - 提供TS语法检查 */
+    "jest", /* Jest插件 - 提供测试相关规则 */
+    "import", /* Import插件 - 检查ES6+的import/export语法 */
+    "unused-imports" /* 清除没用到的引用*/
+  ],
+  /* parser: 指定代码解析器 - 将TypeScript代码转换为ESLint可理解的格式 */
+  "parser": "@typescript-eslint/parser",
+  /* env: 指定代码运行的环境 */
+  "env": {
+    "browser": true, /* 浏览器环境 - 启用浏览器全局变量 */
+    "es6": true, /* ES6环境 - 启用ES6语法支持 */
+    "jest": true /* Jest环境 - 启用Jest测试全局变量 */
+  },
+  /* parserOptions: 解析器选项 - 配置解析器如何处理代码 */
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true /* 启用JSX语法支持 */
+    },
+    "ecmaVersion": 2018, /* 使用ECMAScript 2018语法 */
+    "sourceType": "module", /* 使用ES模块语法 */
+    "project": "./tsconfig.eslint.json" /* TypeScript配置文件路径 */
+  },
+  /* rules: 自定义规则配置 - 可覆盖或扩展继承的规则 */
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-shadow":"off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "unused-imports/no-unused-vars": "off"
+  }
+}

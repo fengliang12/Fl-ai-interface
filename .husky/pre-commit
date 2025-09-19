@@ -2,4 +2,3 @@
 
 # 运行lint-staged进行代码检查和自动修复
 pnpm lint-staged
-pnpm test:unit

@@ -1,11 +1,20 @@
-import { AppBar, Box, Card, CardContent, Container, Grid, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Typography,
+} from '@mui/material';
 
 import AddRedPacket from '@/components/AddRedPacket';
 import Dashboard from '@/components/Dashboard';
 import SendRedPacket from '@/components/SendRedPacket';
 import TopInfo from '@/components/TopInfo';
+import React from 'react';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 顶部导航栏 */}
@@ -47,6 +56,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;

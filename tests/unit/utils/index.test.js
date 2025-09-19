@@ -1,5 +1,5 @@
 // 导入要测试的addressFormat函数
-const { addressFormat } = require('../../../src/utils/index');
+import { addressFormat } from '../../../src/utils/index';
 
 // describe: Jest测试套件，用于组织相关的测试用例
 describe('addressFormat', () => {

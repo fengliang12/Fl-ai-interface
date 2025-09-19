@@ -20,6 +20,7 @@ import { useWalletContext } from '../contexts/WalletContext';
 
 const RED_PACKET_ADDRESS = '0x8e65E1433Dc78a2DE1E9e0F0358C9C03f7133c99';
 const RedPacketABI = RedPacketContract.abi;
+import React from 'react';
 
 export const redPacketContractAtom = atom({
   count: '',
@@ -28,7 +29,7 @@ export const redPacketContractAtom = atom({
   address: '',
 });
 
-const AddRedPacket = () => {
+const AddRedPacket: React.FC = () => {
   const { isConnected, signer } = useWalletContext();
 
   const [redPacketState, setRedPacketState] = useAtom(redPacketContractAtom);
@@ -47,7 +48,11 @@ const AddRedPacket = () => {
   const getContractBalance = async () => {
     if (!signer) return;
     try {
-      const contract = new ethers.Contract(RED_PACKET_ADDRESS!, RedPacketABI, signer);
+      const contract = new ethers.Contract(
+        RED_PACKET_ADDRESS,
+        RedPacketABI,
+        signer
+      );
       const balance = await contract.getBalance();
       const count = await contract.count();
       const isEqual = await contract.isEqual();
@@ -56,7 +61,7 @@ const AddRedPacket = () => {
       setRedPacketState({
         ...redPacketState,
         count: ethers.formatUnits(count, 0),
-        address: RED_PACKET_ADDRESS!,
+        address: RED_PACKET_ADDRESS,
         isEqual: isEqual,
         balance: ethers.formatEther(balance),
       });
@@ -94,7 +99,11 @@ const AddRedPacket = () => {
     setSuccess(null);
 
     try {
-      const contract = new ethers.Contract(RED_PACKET_ADDRESS!, RedPacketABI, signer);
+      const contract = new ethers.Contract(
+        RED_PACKET_ADDRESS,
+        RedPacketABI,
+        signer
+      );
       // 调用充值合约方法
       const tx = await contract.deposit(count, isEqualAmount, {
         value: ethers.parseEther(depositAmount),
@@ -125,7 +134,10 @@ const AddRedPacket = () => {
   return (
     <Paper className="p-6 hover:shadow-lg transition-shadow duration-300">
       <Box className="text-center mb-6">
-        <AccountBalanceWallet className="text-primary-500 mb-2" sx={{ fontSize: 48 }} />
+        <AccountBalanceWallet
+          className="text-primary-500 mb-2"
+          sx={{ fontSize: 48 }}
+        />
         <Typography variant="h5" className="mb-2 font-semibold">
           红包充值
         </Typography>
@@ -165,7 +177,11 @@ const AddRedPacket = () => {
 
             <FormControlLabel
               control={
-                <Switch checked={isEqualAmount} onChange={(e) => setIsEqualAmount(e.target.checked)} color="primary" />
+                <Switch
+                  checked={isEqualAmount}
+                  onChange={(e) => setIsEqualAmount(e.target.checked)}
+                  color="primary"
+                />
               }
               label={isEqualAmount ? '等额发放' : '随机金额'}
             />
@@ -187,7 +203,9 @@ const AddRedPacket = () => {
               size="large"
               onClick={handleDeposit}
               disabled={isDepositing || !redPacketCount || !depositAmount}
-              startIcon={isDepositing ? <CircularProgress size={20} /> : <Send />}
+              startIcon={
+                isDepositing ? <CircularProgress size={20} /> : <Send />
+              }
             >
               {isDepositing ? '充值中...' : '充值红包'}
             </Button>
