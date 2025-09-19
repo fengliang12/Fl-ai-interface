@@ -19,7 +19,7 @@ function App() {
         <Card className="mb-8 bg-gradient-to-r text-black">
           <CardContent className="text-black">
             <Typography variant="h4" component="h1" className="mb-2 font-bold">
-              欢迎使用红包应用 🧧
+              欢迎11使用红包应用 🧧
             </Typography>
             <Typography variant="body1" className="opacity-90">
               基于区块链技术的去中心化红包系统，安全、透明、公平
