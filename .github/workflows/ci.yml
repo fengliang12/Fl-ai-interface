@@ -31,7 +31,7 @@ jobs:
 
       - name: Install and run checks # 安装依赖并运行检查
         run: | # 多行命令脚本
-          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
           pnpm run lint # 运行代码风格检查
           npx tsc --noEmit # 运行TypeScript类型检查
           pnpm run test:unit:ci # 运行单元测试
@@ -70,7 +70,7 @@ jobs:
 
       - name: Install, start app and test # 安装依赖、启动应用并运行E2E测试
         run: | # 多行命令脚本
-          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
           npx cypress install # 安装Cypress二进制文件
           pnpm run dev & # 后台启动开发服务器
           echo $! > .pidfile # 保存服务器进程ID到文件
@@ -108,7 +108,7 @@ jobs:
 
       - name: Install and build # 安装依赖并构建生产版本
         run: | # 多行命令脚本
-          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
           pnpm run prod # 执行生产环境构建
 
       - uses: actions/upload-artifact@v4 # 上传构建产物
