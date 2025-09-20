@@ -57,32 +57,32 @@ jobs:
           node-version: ${{ env.NODE_VERSION }} # 使用环境变量中定义的Node版本
           cache: 'pnpm' # 启用PNPM缓存加速安装
       - uses: actions/cache@v4 # 设置Cypress二进制文件缓存
-         with: # 配置参数
-           path: ${{ env.CYPRESS_CACHE_FOLDER }} # 缓存路径
-           key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }} # 缓存键值
+        with: # 配置参数
+          path: ${{ env.CYPRESS_CACHE_FOLDER }} # 缓存路径
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }} # 缓存键值
+      
+      - name: Setup virtual display # 设置虚拟显示器
+        run: | # 多行命令脚本
+          sudo apt-get update # 更新包列表
+          sudo apt-get install -y xvfb # 安装虚拟帧缓冲
+          export DISPLAY=:99 # 设置显示器环境变量
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & # 启动虚拟显示器
 
-       - name: Setup virtual display # 设置虚拟显示器
-         run: | # 多行命令脚本
-           sudo apt-get update # 更新包列表
-           sudo apt-get install -y xvfb # 安装虚拟帧缓冲
-           export DISPLAY=:99 # 设置显示器环境变量
-           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & # 启动虚拟显示器
-
-       - name: Install, start app and test # 安装依赖、启动应用并运行E2E测试
-         run: | # 多行命令脚本
-           pnpm install --frozen-lockfile # 根据锁定文件安装依赖
-           npx cypress install # 安装Cypress二进制文件
-           pnpm run dev & # 后台启动开发服务器
-           echo $! > .pidfile # 保存服务器进程ID到文件
-           timeout 60 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' # 等待服务器启动完成
-           pnpm run test:e2e:ci # 运行E2E测试
-           kill $(cat .pidfile) || true # 测试完成后关闭服务器进程
-         env: # 环境变量
-           CI: true # 标识为CI环境
-           CYPRESS_baseUrl: http://localhost:3000 # Cypress测试基础URL
-           NODE_OPTIONS: '--import tsx/esm' # 修复Node.js 18下tsx加载器问题
-           DISPLAY: ':99' # 设置虚拟显示器
-           ELECTRON_DISABLE_SECURITY_WARNINGS: true # 禁用Electron安全警告
+      - name: Install, start app and test # 安装依赖、启动应用并运行E2E测试
+        run: | # 多行命令脚本
+          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          npx cypress install # 安装Cypress二进制文件
+          pnpm run dev & # 后台启动开发服务器
+          echo $! > .pidfile # 保存服务器进程ID到文件
+          timeout 60 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' # 等待服务器启动完成
+          pnpm run test:e2e:ci # 运行E2E测试
+          kill $(cat .pidfile) || true # 测试完成后关闭服务器进程
+        env: # 环境变量
+          CI: true # 标识为CI环境
+          CYPRESS_baseUrl: http://localhost:3000 # Cypress测试基础URL
+          NODE_OPTIONS: '--import tsx/esm' # 修复Node.js 18下tsx加载器问题
+          DISPLAY: ':99' # 设置虚拟显示器
+          ELECTRON_DISABLE_SECURITY_WARNINGS: true # 禁用Electron安全警告
 
       - uses: actions/upload-artifact@v4 # 上传测试产物
         if: always() # 无论测试成功失败都执行
