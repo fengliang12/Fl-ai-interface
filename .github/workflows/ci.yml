@@ -1,270 +1,118 @@
 # GitHub Actions CI 工作流配置文件
-name: CI Pipeline
+name: CI Pipeline # 工作流名称
 
-# 定义触发工作流的事件
+# 触发条件：推送或拉取请求时执行
 on:
-  # 当推送到指定分支时触发
-  push:
-    branches: [main, develop]  # 仅在推送到 main 或 develop 分支时触发
-  # 当创建针对指定分支的 Pull Request 时触发
-  pull_request:
-    branches: [main, develop]  # 仅针对 main 或 develop 分支的 PR 触发
+  push: # 推送代码时触发
+    branches: [main, develop] # 仅在main和develop分支触发
+  pull_request: # 创建拉取请求时触发
+    branches: [main, develop] # 仅针对main和develop分支的PR
 
-# 定义环境变量，可在所有 jobs 中使用
+# 环境变量定义
 env:
-  NODE_VERSION: '18'  # Node.js 版本
-  PNPM_VERSION: '8'   # pnpm 包管理器版本
-  CYPRESS_CACHE_FOLDER: ~/.cache/Cypress  # Cypress 二进制文件缓存目录
+  NODE_VERSION: '18' # Node.js版本
+  PNPM_VERSION: '8' # PNPM包管理器版本
+  CYPRESS_CACHE_FOLDER: ~/.cache/Cypress # Cypress缓存目录
 
-# 定义工作流中的所有任务
+# 任务定义
 jobs:
-  # 代码质量检查任务
-  lint:
-    runs-on: ubuntu-latest  # 运行环境：最新版 Ubuntu
-    steps:  # 任务步骤列表
-      # 步骤1：检出代码到运行环境
-      - name: Checkout code
-        uses: actions/checkout@v4  # 使用官方检出 action
+  # 质量检查和单元测试（合并执行）
+  test: # 测试任务名称
+    runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
+    steps: # 执行步骤列表
+      - uses: actions/checkout@v4 # 检出代码到工作目录
+      - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
+        with: # 配置参数
+          version: ${{ env.PNPM_VERSION }} # 使用环境变量中定义的PNPM版本
+      - uses: actions/setup-node@v4 # 设置Node.js环境
+        with: # 配置参数
+          node-version: ${{ env.NODE_VERSION }} # 使用环境变量中定义的Node版本
+          cache: 'pnpm' # 启用PNPM缓存加速安装
 
-      # 步骤2：安装 pnpm 包管理器
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4  # 使用 pnpm 官方 action
-        with:
-          version: ${{ env.PNPM_VERSION }}  # 使用环境变量中定义的版本
+      - name: Install and run checks # 安装依赖并运行检查
+        run: | # 多行命令脚本
+          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          pnpm run lint # 运行代码风格检查
+          npx tsc --noEmit # 运行TypeScript类型检查
+          pnpm run test:unit:ci # 运行单元测试
 
-      # 步骤3：设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v4  # 使用官方 Node.js 设置 action
-        with:
-          node-version: ${{ env.NODE_VERSION }}  # 使用环境变量中定义的 Node.js 版本
-          cache: "pnpm"  # 启用 pnpm 缓存以加速依赖安装
+      - name: Upload coverage # 上传测试覆盖率报告
+        uses: codecov/codecov-action@v4 # 使用Codecov上传覆盖率
+        with: # 配置参数
+          token: ${{ secrets.CODECOV_TOKEN }} # Codecov访问令牌
+          files: ./coverage/lcov.info # 覆盖率报告文件路径
+          fail_ci_if_error: false # 上传失败时不中断CI
 
-      # 步骤4：获取 pnpm 存储目录路径
-      - name: Get pnpm store directory
-        shell: bash  # 使用 bash shell 执行命令
-        run: |  # 多行命令
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV  # 将 pnpm 存储路径设置为环境变量
+  # E2E 测试任务
+  e2e-tests: # E2E测试任务名称
+    runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
+    needs: test # 依赖test任务完成后执行
+    steps: # 执行步骤列表
+      - uses: actions/checkout@v4 # 检出代码到工作目录
+      - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
+        with: # 配置参数
+          version: ${{ env.PNPM_VERSION }} # 使用环境变量中定义的PNPM版本
+      - uses: actions/setup-node@v4 # 设置Node.js环境
+        with: # 配置参数
+          node-version: ${{ env.NODE_VERSION }} # 使用环境变量中定义的Node版本
+          cache: 'pnpm' # 启用PNPM缓存加速安装
+      - uses: actions/cache@v4 # 设置Cypress二进制文件缓存
+         with: # 配置参数
+           path: ${{ env.CYPRESS_CACHE_FOLDER }} # 缓存路径
+           key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }} # 缓存键值
 
-      # 步骤5：设置 pnpm 缓存以加速后续构建
-      - name: Setup pnpm cache
-        uses: actions/cache@v4  # 使用官方缓存 action
-        with:
-          path: ${{ env.STORE_PATH }}  # 缓存路径：pnpm 存储目录
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}  # 缓存键：基于操作系统和 lockfile 哈希
-          restore-keys: |  # 缓存恢复键的备选方案
-            ${{ runner.os }}-pnpm-store-  # 如果精确匹配失败，使用部分匹配
+       - name: Setup virtual display # 设置虚拟显示器
+         run: | # 多行命令脚本
+           sudo apt-get update # 更新包列表
+           sudo apt-get install -y xvfb # 安装虚拟帧缓冲
+           export DISPLAY=:99 # 设置显示器环境变量
+           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 & # 启动虚拟显示器
 
-      # 步骤6：安装项目依赖
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 安装依赖，允许更新 lockfile
+       - name: Install, start app and test # 安装依赖、启动应用并运行E2E测试
+         run: | # 多行命令脚本
+           pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+           npx cypress install # 安装Cypress二进制文件
+           pnpm run dev & # 后台启动开发服务器
+           echo $! > .pidfile # 保存服务器进程ID到文件
+           timeout 60 bash -c 'until curl -f http://localhost:3000; do sleep 2; done' # 等待服务器启动完成
+           pnpm run test:e2e:ci # 运行E2E测试
+           kill $(cat .pidfile) || true # 测试完成后关闭服务器进程
+         env: # 环境变量
+           CI: true # 标识为CI环境
+           CYPRESS_baseUrl: http://localhost:3000 # Cypress测试基础URL
+           NODE_OPTIONS: '--import tsx/esm' # 修复Node.js 18下tsx加载器问题
+           DISPLAY: ':99' # 设置虚拟显示器
+           ELECTRON_DISABLE_SECURITY_WARNINGS: true # 禁用Electron安全警告
 
-      # 步骤7：运行代码检查（ESLint）
-      - name: Run linting
-        run: pnpm run lint  # 执行 package.json 中定义的 lint 脚本
-
-      # 步骤8：运行 TypeScript 类型检查
-      - name: Check TypeScript
-        run: npx tsc --noEmit  # 运行 TypeScript 编译器进行类型检查，不生成输出文件
-
-  # 单元测试任务
-  unit-tests:
-    runs-on: ubuntu-latest  # 运行环境：最新版 Ubuntu
-    steps:  # 任务步骤列表
-      # 步骤1：检出代码到运行环境
-      - name: Checkout code
-        uses: actions/checkout@v4  # 使用官方检出 action
-
-      # 步骤2：安装 pnpm 包管理器
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4  # 使用 pnpm 官方 action
-        with:
-          version: ${{ env.PNPM_VERSION }}  # 使用环境变量中定义的版本
-
-      # 步骤3：设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v4  # 使用官方 Node.js 设置 action
-        with:
-          node-version: ${{ env.NODE_VERSION }}  # 使用环境变量中定义的 Node.js 版本
-          cache: "pnpm"  # 启用 pnpm 缓存以加速依赖安装
-
-      # 步骤4：获取 pnpm 存储目录路径
-      - name: Get pnpm store directory
-        shell: bash  # 使用 bash shell 执行命令
-        run: |  # 多行命令
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV  # 将 pnpm 存储路径设置为环境变量
-
-      # 步骤5：设置 pnpm 缓存以加速后续构建
-      - name: Setup pnpm cache
-        uses: actions/cache@v4  # 使用官方缓存 action
-        with:
-          path: ${{ env.STORE_PATH }}  # 缓存路径：pnpm 存储目录
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}  # 缓存键：基于操作系统和 lockfile 哈希
-          restore-keys: |  # 缓存恢复键的备选方案
-            ${{ runner.os }}-pnpm-store-  # 如果精确匹配失败，使用部分匹配
-
-      # 步骤6：安装项目依赖
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 安装依赖，允许更新 lockfile
-
-      # 步骤7：运行单元测试
-      - name: Run unit tests
-        run: pnpm run test:unit:ci  # 执行 package.json 中定义的单元测试脚本（CI 模式）
-
-      # 步骤8：上传测试覆盖率报告
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v4  # 使用 Codecov action 上传覆盖率报告
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}  # 使用 GitHub Secrets 中的 Codecov token
-          files: ./coverage/lcov.info  # 覆盖率报告文件路径
-          fail_ci_if_error: false  # 即使上传失败也不让 CI 失败
-
-  # E2E（端到端）测试任务
-  e2e-tests:
-    runs-on: ubuntu-latest  # 运行环境：最新版 Ubuntu
-    needs: unit-tests  # 依赖于单元测试任务完成
-    steps:  # 任务步骤列表
-      # 步骤1：检出代码到运行环境
-      - name: Checkout code
-        uses: actions/checkout@v4  # 使用官方检出 action
-
-      # 步骤2：安装 pnpm 包管理器
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4  # 使用 pnpm 官方 action
-        with:
-          version: ${{ env.PNPM_VERSION }}  # 使用环境变量中定义的版本
-
-      # 步骤3：设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v4  # 使用官方 Node.js 设置 action
-        with:
-          node-version: ${{ env.NODE_VERSION }}  # 使用环境变量中定义的 Node.js 版本
-          cache: "pnpm"  # 启用 pnpm 缓存以加速依赖安装
-
-      # 步骤4：获取 pnpm 存储目录路径
-      - name: Get pnpm store directory
-        shell: bash  # 使用 bash shell 执行命令
-        run: |  # 多行命令
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV  # 将 pnpm 存储路径设置为环境变量
-
-      # 步骤5：设置 pnpm 缓存以加速后续构建
-      - name: Setup pnpm cache
-        uses: actions/cache@v4  # 使用官方缓存 action
-        with:
-          path: ${{ env.STORE_PATH }}  # 缓存路径：pnpm 存储目录
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}  # 缓存键：基于操作系统和 lockfile 哈希
-          restore-keys: |  # 缓存恢复键的备选方案
-            ${{ runner.os }}-pnpm-store-  # 如果精确匹配失败，使用部分匹配
-
-      # 步骤6：缓存 Cypress 二进制文件以加速安装
-      - name: Cache Cypress binary
-        uses: actions/cache@v4  # 使用官方缓存 action
-        with:
-          path: ${{ env.CYPRESS_CACHE_FOLDER }}  # 缓存路径：Cypress 二进制文件目录
-          key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}  # 缓存键：基于操作系统和 lockfile 哈希
-          restore-keys: |  # 缓存恢复键的备选方案
-            ${{ runner.os }}-cypress-  # 如果精确匹配失败，使用部分匹配
-
-      # 步骤7：安装项目依赖
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 安装依赖，允许更新 lockfile
-
-      # 步骤8：安装 Cypress 二进制文件
-      - name: Install Cypress binary
-        run: npx cypress install  # 确保 Cypress 二进制文件已安装
-
-      # 步骤9：启动应用程序（后台运行）
-      - name: Start application in background
-        run: |  # 多行命令
-          pnpm run dev &  # 在后台启动开发服务器
-          echo $! > .pidfile  # 将进程 ID 保存到文件中以便后续停止
-        env:
-          CI: true  # 设置 CI 环境变量
-
-      # 步骤10：等待应用程序启动完成
-      - name: Wait for application to be ready
-        run: |  # 多行命令
-          timeout 60 bash -c 'until curl -f http://localhost:3000; do sleep 2; done'  # 等待应用在 localhost:3000 可用，超时 60 秒
-
-      # 步骤11：运行 Cypress E2E 测试
-      - name: Run Cypress E2E tests
-        run: pnpm run test:e2e:ci  # 执行 package.json 中定义的 E2E 测试脚本（CI 模式）
-        env:
-          CYPRESS_baseUrl: http://localhost:3000  # 设置 Cypress 基础 URL
-
-      # 步骤12：停止应用程序（无论测试成功或失败都执行）
-      - name: Stop application
-        if: always()  # 无论前面步骤成功或失败都执行
-        run: |  # 多行命令
-          if [ -f .pidfile ]; then  # 如果进程 ID 文件存在
-            kill $(cat .pidfile) || true  # 终止应用进程，忽略错误
-            rm .pidfile  # 删除进程 ID 文件
-          fi
-
-      # 步骤13：上传测试失败时的截图
-      - name: Upload Cypress screenshots
-        uses: actions/upload-artifact@v4  # 使用官方上传 artifact action
-        if: failure()  # 仅在测试失败时执行
-        with:
-          name: cypress-screenshots  # artifact 名称
-          path: cypress/screenshots  # 截图文件路径
-
-      # 步骤14：上传测试视频（无论成功或失败）
-      - name: Upload Cypress videos
-        uses: actions/upload-artifact@v4  # 使用官方上传 artifact action
-        if: always()  # 无论测试成功或失败都执行
-        with:
-          name: cypress-videos  # artifact 名称
-          path: cypress/videos  # 视频文件路径
+      - uses: actions/upload-artifact@v4 # 上传测试产物
+        if: always() # 无论测试成功失败都执行
+        with: # 配置参数
+          name: cypress-artifacts # 产物名称
+          path: | # 上传路径（多行）
+            cypress/screenshots # 测试截图
+            cypress/videos # 测试视频
 
   # 构建检查任务
-  build:
-    runs-on: ubuntu-latest  # 运行环境：最新版 Ubuntu
-    needs: [lint, unit-tests]  # 依赖于 lint 和单元测试任务完成
-    steps:  # 任务步骤列表
-      # 步骤1：检出代码到运行环境
-      - name: Checkout code
-        uses: actions/checkout@v4  # 使用官方检出 action
+  build: # 构建任务名称
+    runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
+    needs: test # 依赖test任务完成后执行
+    steps: # 执行步骤列表
+      - uses: actions/checkout@v4 # 检出代码到工作目录
+      - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
+        with: # 配置参数
+          version: ${{ env.PNPM_VERSION }} # 使用环境变量中定义的PNPM版本
+      - uses: actions/setup-node@v4 # 设置Node.js环境
+        with: # 配置参数
+          node-version: ${{ env.NODE_VERSION }} # 使用环境变量中定义的Node版本
+          cache: 'pnpm' # 启用PNPM缓存加速安装
 
-      # 步骤2：安装 pnpm 包管理器
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4  # 使用 pnpm 官方 action
-        with:
-          version: ${{ env.PNPM_VERSION }}  # 使用环境变量中定义的版本
+      - name: Install and build # 安装依赖并构建生产版本
+        run: | # 多行命令脚本
+          pnpm install --frozen-lockfile # 根据锁定文件安装依赖
+          pnpm run prod # 执行生产环境构建
 
-      # 步骤3：设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v4  # 使用官方 Node.js 设置 action
-        with:
-          node-version: ${{ env.NODE_VERSION }}  # 使用环境变量中定义的 Node.js 版本
-          cache: "pnpm"  # 启用 pnpm 缓存以加速依赖安装
-
-      # 步骤4：获取 pnpm 存储目录路径
-      - name: Get pnpm store directory
-        shell: bash  # 使用 bash shell 执行命令
-        run: |  # 多行命令
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV  # 将 pnpm 存储路径设置为环境变量
-
-      # 步骤5：设置 pnpm 缓存以加速后续构建
-      - name: Setup pnpm cache
-        uses: actions/cache@v4  # 使用官方缓存 action
-        with:
-          path: ${{ env.STORE_PATH }}  # 缓存路径：pnpm 存储目录
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}  # 缓存键：基于操作系统和 lockfile 哈希
-          restore-keys: |  # 缓存恢复键的备选方案
-            ${{ runner.os }}-pnpm-store-  # 如果精确匹配失败，使用部分匹配
-
-      # 步骤6：安装项目依赖
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 安装依赖，允许更新 lockfile
-
-      # 步骤7：构建生产版本
-      - name: Build for production
-        run: pnpm run prod  # 执行 package.json 中定义的生产构建脚本
-
-      # 步骤8：上传构建产物
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4  # 使用官方上传 artifact action
-        with:
-          name: build-files  # artifact 名称
-          path: dist/  # 构建输出目录路径
-          retention-days: 7  # artifact 保留天数
+      - uses: actions/upload-artifact@v4 # 上传构建产物
+        with: # 配置参数
+          name: build-files # 产物名称
+          path: dist/ # 构建输出目录
+          retention-days: 7 # 产物保留天数
