@@ -13,11 +13,8 @@ import Dashboard from '@/components/Dashboard';
 import SendRedPacket from '@/components/SendRedPacket';
 import TopInfo from '@/components/TopInfo';
 import React from 'react';
-import { useImmer } from '@fl/hooks';
-import { ButtonCva } from '@fl/components';
 
 const App: React.FC = () => {
-  const [state, setState] = useImmer('1111');
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 顶部导航栏 */}
@@ -31,8 +28,7 @@ const App: React.FC = () => {
         <Card className="mb-8 bg-gradient-to-r text-black">
           <CardContent className="text-black">
             <Typography variant="h4" component="h1" className="mb-2 font-bold">
-              欢迎使用红包应用 🧧{state}
-              <ButtonCva></ButtonCva>
+              欢迎使用红包应用 🧧
             </Typography>
             <Typography variant="body1" className="opacity-90">
               基于区块链技术的去中心化红包系统，安全、透明、公平
