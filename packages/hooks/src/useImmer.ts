@@ -11,7 +11,7 @@ export function useImmer<S = unknown>(
 ): ImmerHook<S>;
 
 export function useImmer<T>(initialValue: T) {
-  console.log(111);
+  console.log(111222);
 
   //封装useState
   const [val, updateValue] = useState(() =>
