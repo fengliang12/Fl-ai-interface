@@ -50,7 +50,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@Fl/hooks": "^1.6.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@ethersproject/bignumber": "^5.8.0",
