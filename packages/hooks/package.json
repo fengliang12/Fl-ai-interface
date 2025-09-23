@@ -13,5 +13,9 @@
   "peerDependencies": {
     "immer": "*",
     "react": "*"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:4873",
+    "access": "public"
   }
 }

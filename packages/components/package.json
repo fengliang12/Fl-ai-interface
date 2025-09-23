@@ -15,5 +15,9 @@
   },
   "dependencies": {
     "@fl/hooks": "workspace:^"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:4873",
+    "access": "public"
   }
 }
