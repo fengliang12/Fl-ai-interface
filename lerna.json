@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "version": "independent",
+  "npmClient": "pnpm",
+  "packages": ["packages/*"],
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish",
+      "allowBranch": ["master", "main"],
+      "ignoreChanges": [
+        "**/*.md",
+        "**/*.test.js",
+        "**/*.spec.js",
+        "**/*-lock.json",
+        "**/package-lock.json",
+        "**/pnpm-lock.yaml",
+        "**/yarn.lock"
+      ]
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish",
+      "ignoreChanges": [
+        "**/*.md",
+        "**/*.test.js",
+        "**/*.spec.js",
+        "**/*-lock.json",
+        "**/package-lock.json",
+        "**/pnpm-lock.yaml",
+        "**/yarn.lock"
+      ]
+    },
+    "bootstrap": {
+      "hoist": true
+    }
+  }
+}

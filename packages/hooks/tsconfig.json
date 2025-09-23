@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declarationDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "incremental": false,
+    "composite": false, //增量编译缓存文件，可以提高编译速度，但是会生成tsconfig.tsbuildinfo
+    "noEmit": false, //是否禁止 TypeScript 生成编译输出文件（如 .js、.d.ts、.js.map 等）。设为 true 时，仅进行类型检查，不生成任何输出（适用于纯类型检查或 CI 环境
+    "emitDeclarationOnly": false, //是否仅生成类型声明文件（.d.ts），不生成 JavaScript 代码。
+    "sourceMap": false, //是否生成 Source Map 文件（.js.map) ；开发调试时设为 true，可以通过浏览器直接调试 TypeScript 源码（而非编译后的 JS）; 生产环境通常关闭以减少体积。
+    "module": "ESNext", //指定生成的 JavaScript 模块系统格式
+    "target": "ESNext" //指定编译后的 JavaScript 代码的语法版本。
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
+}

@@ -8,3 +8,4 @@ coverage/
 public/
 .storybook/
 storybook-static/
+tests/
