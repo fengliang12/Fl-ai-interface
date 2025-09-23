@@ -2,13 +2,21 @@
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "version": "independent",
   "npmClient": "pnpm",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "version": {
       "conventionalCommits": true,
       "message": "chore(release): publish",
-      "allowBranch": ["master", "main"],
+      "allowBranch": [
+        "master",
+        "main",
+        "develop"
+      ],
       "ignoreChanges": [
+        ".github/",
+        ".husky/",
         "**/*.md",
         "**/*.test.js",
         "**/*.spec.js",
