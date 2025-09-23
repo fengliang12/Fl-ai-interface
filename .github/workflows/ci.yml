@@ -77,7 +77,11 @@ jobs:
           node-version: 20 # 使用Node.js版本20
           cache: 'pnpm' # 启用PNPM缓存加速安装
 
-      - name: Install dependencies and run E2E tests # 安装依赖并运行E2E测试
-        run: | # 多行命令脚本
-          pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
-          pnpm run test:e2e:ci # 运行Cypress E2E测试
+      - name: Install dependencies # 安装依赖
+        run: pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
+
+      - name: Install Cypress binary # 安装Cypress二进制文件
+        run: npx cypress install # 确保Cypress二进制文件已安装
+
+      - name: Run E2E tests # 运行E2E测试
+        run: pnpm run test:e2e:ci # 运行Cypress E2E测试
