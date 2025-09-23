@@ -83,5 +83,13 @@ jobs:
       - name: Install Cypress binary # 安装Cypress二进制文件
         run: npx cypress install # 确保Cypress二进制文件已安装
 
+      - name: Start development server # 启动开发服务器
+        run: pnpm run dev & # 在后台启动开发服务器
+        env:
+          CI: true
+
+      - name: Wait for server to be ready # 等待服务器就绪
+        run: npx wait-on http://localhost:3000 --timeout 60000 # 等待服务器启动
+
       - name: Run E2E tests # 运行E2E测试
         run: pnpm run test:e2e:ci # 运行Cypress E2E测试
