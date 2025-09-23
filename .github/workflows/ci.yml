@@ -8,6 +8,11 @@ on:
   pull_request: # 创建拉取请求时触发
     branches: [main, develop] # 仅针对main和develop分支的PR
 
+# 设置并发控制，确保同一分支只有一个工作流运行
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # 任务定义
 jobs:
   # ESLint 代码检查
@@ -62,7 +67,7 @@ jobs:
   e2e: # E2E测试任务名称
     runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
     timeout-minutes: 20 # 任务超时时间：20分钟
-    
+
     steps: # 执行步骤列表
       # 检出代码
       - name: Checkout code
@@ -71,7 +76,7 @@ jobs:
       - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
         with: # 配置参数
           version: 8 # 使用PNPM版本8
-          
+
       - uses: actions/setup-node@v4 # 设置Node.js环境
         with: # 配置参数
           node-version: 20 # 使用Node.js版本20
@@ -93,3 +98,36 @@ jobs:
 
       - name: Run E2E tests # 运行E2E测试
         run: pnpm run test:e2e:ci # 运行Cypress E2E测试
+
+  # 部署任务 - 只有在所有测试通过后才执行
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [lint, test, e2e] # 依赖所有测试任务完成
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' # 只在主分支部署
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build for production
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: Deploy ready signal
+        run: |
+          echo "✅ All tests passed! Ready for deployment."
+          echo "Build artifacts are ready for Cloudflare Pages."
