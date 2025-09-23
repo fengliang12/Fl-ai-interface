@@ -14,7 +14,7 @@ jobs:
   lint: # 代码检查任务名称
     runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
     timeout-minutes: 10 # 任务超时时间：10分钟
-    
+
     steps: # 执行步骤列表
       # 检出代码
       - name: Checkout code
@@ -23,7 +23,7 @@ jobs:
       - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
         with: # 配置参数
           version: 8 # 使用PNPM版本8
-          
+
       - uses: actions/setup-node@v4 # 设置Node.js环境
         with: # 配置参数
           node-version: 20 # 使用Node.js版本20
@@ -38,6 +38,30 @@ jobs:
   test: # 单元测试任务名称
     runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
     timeout-minutes: 15 # 任务超时时间：15分钟
+
+    steps: # 执行步骤列表
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # 安装PNPM包管理器
+        with: # 配置参数
+          version: 8 # 使用PNPM版本8
+
+      - uses: actions/setup-node@v4 # 设置Node.js环境
+        with: # 配置参数
+          node-version: 20 # 使用Node.js版本20
+          cache: 'pnpm' # 启用PNPM缓存加速安装
+
+      - name: Install dependencies and run tests # 安装依赖并运行单元测试
+        run: | # 多行命令脚本
+          pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
+          pnpm run test:unit:ci # 运行Jest单元测试
+
+  # E2E测试
+  e2e: # E2E测试任务名称
+    runs-on: ubuntu-latest # 运行环境：Ubuntu最新版
+    timeout-minutes: 20 # 任务超时时间：20分钟
     
     steps: # 执行步骤列表
       # 检出代码
@@ -53,7 +77,7 @@ jobs:
           node-version: 20 # 使用Node.js版本20
           cache: 'pnpm' # 启用PNPM缓存加速安装
 
-      - name: Install dependencies and run tests # 安装依赖并运行单元测试
+      - name: Install dependencies and run E2E tests # 安装依赖并运行E2E测试
         run: | # 多行命令脚本
           pnpm install --no-frozen-lockfile # 安装依赖（允许更新锁定文件）
-          pnpm run test:unit:ci # 运行Jest单元测试
+          pnpm run test:e2e:ci # 运行Cypress E2E测试
