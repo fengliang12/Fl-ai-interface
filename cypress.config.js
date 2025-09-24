@@ -1,23 +1,23 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   // E2E 测试配置
   e2e: {
     // 基础URL，指向本地开发服务器
-    baseUrl: "http://localhost:3000",
+    baseUrl: 'http://localhost:3000',
 
     // 测试文件存放目录
-    specPattern: "tests/e2e/**/*.cy.{js,jsx,ts,tsx}",
+    specPattern: 'tests/e2e/**/*.cy.{js,jsx,ts,tsx}',
 
     // 支持文件目录
-    supportFile: "tests/e2e/support/e2e.js",
+    supportFile: 'tests/e2e/support/e2e.js',
 
     // 固定装置文件目录
-    fixturesFolder: "tests/e2e/fixtures",
+    fixturesFolder: 'tests/e2e/fixtures',
 
     // 截图和视频存放目录
-    screenshotsFolder: "tests/e2e/screenshots",
-    videosFolder: "tests/e2e/videos",
+    screenshotsFolder: 'tests/e2e/screenshots',
+    videosFolder: 'tests/e2e/videos',
 
     // 视口设置
     viewportWidth: 1280,
@@ -41,7 +41,7 @@ module.exports = defineConfig({
       // 这里可以添加插件和任务
 
       // 处理Web3相关的任务
-      on("task", {
+      on('task', {
         // 日志输出任务
         log(message) {
           console.log(message);
@@ -66,18 +66,18 @@ module.exports = defineConfig({
   // 组件测试配置（可选）
   component: {
     devServer: {
-      framework: "react",
-      bundler: "webpack",
+      framework: 'react',
+      bundler: 'webpack',
     },
-    specPattern: "src/**/*.cy.{js,jsx,ts,tsx}",
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
   },
 
   // 全局配置
   env: {
     // 环境变量，可以在测试中使用 Cypress.env('变量名') 访问
-    WALLET_PRIVATE_KEY: "test_private_key_here",
-    TEST_ACCOUNT_ADDRESS: "0x742d35Cc6634C0532925a3b8D0C9e3e0C8b0e8e8",
-    NETWORK_URL: "http://localhost:8545", // 本地测试网络
+    WALLET_PRIVATE_KEY: 'test_private_key_here',
+    TEST_ACCOUNT_ADDRESS: '0x742d35Cc6634C0532925a3b8D0C9e3e0C8b0e8e8',
+    NETWORK_URL: 'http://localhost:8545', // 本地测试网络
   },
 
   // 忽略的错误类型（Web3应用常见）
