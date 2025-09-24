@@ -4,7 +4,7 @@ name: CI Pipeline # 工作流名称
 # 触发条件：推送或拉取请求时执行
 on:
   push: # 推送代码时触发
-    branches: [develop] # 只在develop分支触发
+    branches: [master, develop] # 在master和develop分支触发
   pull_request: # 拉取请求时触发
     branches: [master] # 针对master分支的PR
   workflow_dispatch: # 手动触发
@@ -104,7 +104,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [lint, test, e2e] # 依赖所有测试任务完成
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master') # 手动触发或PR合并到master时部署
+    if: github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/master' && github.event_name == 'push') || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master') # 手动触发、master分支push或PR合并到master时部署
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
