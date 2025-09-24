@@ -4,7 +4,9 @@ name: CI Pipeline # 工作流名称
 # 触发条件：推送或拉取请求时执行
 on:
   push: # 推送代码时触发
-    branches: [master] # 仅在main和develop分支触发
+    branches: [master, develop] # 在master和develop分支触发
+  pull_request: # 拉取请求时触发
+    branches: [master] # 针对master分支的PR
 
 # 设置并发控制，确保同一分支只有一个工作流运行
 concurrency:
@@ -101,20 +103,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [lint, test, e2e] # 依赖所有测试任务完成
-    if: github.ref == 'refs/heads/master' # 只在主分支部署
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push' # 只在master分支直接推送时部署
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: 8
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -125,7 +127,14 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Deploy ready signal
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=fl-ai-interface
+
+      - name: Deployment success notification
         run: |
-          echo "✅ All tests passed! Ready for deployment."
-          echo "Build artifacts are ready for Cloudflare Pages."
+          echo "🚀 Deployment completed successfully!"
+          echo "✅ All tests passed and application deployed to Cloudflare Pages."
