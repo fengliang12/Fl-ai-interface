@@ -4,9 +4,7 @@ name: CI Pipeline # 工作流名称
 # 触发条件：推送或拉取请求时执行
 on:
   push: # 推送代码时触发
-    branches: [main, develop] # 仅在main和develop分支触发
-  pull_request: # 创建拉取请求时触发
-    branches: [main, develop] # 仅针对main和develop分支的PR
+    branches: [master] # 仅在main和develop分支触发
 
 # 设置并发控制，确保同一分支只有一个工作流运行
 concurrency:
@@ -103,7 +101,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [lint, test, e2e] # 依赖所有测试任务完成
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' # 只在主分支部署
+    if: github.ref == 'refs/heads/master' # 只在主分支部署
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
