@@ -27,6 +27,7 @@ export const useENS = (
     const resolveENS = async () => {
       if (!address || !provider) {
         setEnsName(null);
+
         setEnsAvatar(null);
         setError(null);
         return;
